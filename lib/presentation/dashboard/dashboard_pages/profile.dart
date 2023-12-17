@@ -33,7 +33,6 @@ class _ProfileState extends State<Profile> {
     if (currentUser != null) {
       try {
         DocumentSnapshot<Object?> snapshot;
-
         if (storedUid != null) {
           // Fetch data based on stored document ID
           snapshot = await _items.doc(storedUid).get();

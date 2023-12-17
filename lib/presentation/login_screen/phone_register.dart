@@ -105,6 +105,7 @@ class _PhoneRegisterState extends State<PhoneRegister> {
                         "name": phoneName,
                         "email": phoneEmail,
                         "mobile": phoneMobile,
+                        "userDocId":userId
                       });
 
                       // Store the UID in shared preferences

@@ -228,7 +228,7 @@ class _RegesterState extends State<Regester> {
                                 // Email is already in use
 
                                 Fluttertoast.showToast(
-                                  msg: "Email is already in use. Please use a different email.",
+                                  msg: "Email is already in use",
                                   backgroundColor: Colors.blueGrey,
                                   timeInSecForIosWeb: 5,
                                 );
@@ -278,7 +278,6 @@ class _RegesterState extends State<Regester> {
                               }
 
                             });
-
 
 
                             // Clear text fields after successful registration
