@@ -202,13 +202,11 @@ class _RegesterState extends State<Regester> {
 
                           try {
 
-
-
-
                             UserCredential userCredential = await auth.createUserWithEmailAndPassword(
                               email: emailController.text.toString(),
                               password: passwordController.text.toString(),
-                            ).whenComplete(() async {  // Check if the email is already in use
+                            ).whenComplete(() async {  //
+                              // Check if the email is already in use
                               QuerySnapshot emailQuery = await _items.where("email", isEqualTo: emailController.text).get();
                               // Check if the mobile number is already in use
                               QuerySnapshot mobileQuery = await _items.where("mobile", isEqualTo: mobileController.text).get();

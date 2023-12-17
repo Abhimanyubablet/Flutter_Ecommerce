@@ -21,6 +21,7 @@ class _ProfileState extends State<Profile> {
   String? _userName;
   String? _userEmail;
   String? _userMobile;
+  String? _docId;
   final auth = FirebaseAuth.instance;
 
   // Method to fetch user data
@@ -28,17 +29,25 @@ class _ProfileState extends State<Profile> {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     String? storedUid = prefs.getString('userDocId');
+    bool? status = prefs.getBool('isPhone');
     final currentUser = auth.currentUser;
+    String? phoneNumber = currentUser?.phoneNumber;
+    String? email = currentUser?.email;
 
     if (currentUser != null) {
       try {
         DocumentSnapshot<Object?> snapshot;
-        if (storedUid != null) {
-          // Fetch data based on stored document ID
-          snapshot = await _items.doc(storedUid).get();
+        if (status ==null || status == false) {
+          snapshot = await _items.where('email', isEqualTo: email).limit(1).get().then((querySnapshot) {
+            if (querySnapshot.docs.isNotEmpty) {
+              return querySnapshot.docs.first;
+            } else {
+              throw Exception("User data not found for phone number: $phoneNumber");
+            }
+          });
+
         } else {
           // If no stored document ID, try fetching based on phone number
-          String? phoneNumber = currentUser.phoneNumber;
           snapshot = await _items.where('mobile', isEqualTo: phoneNumber).limit(1).get().then((querySnapshot) {
             if (querySnapshot.docs.isNotEmpty) {
               return querySnapshot.docs.first;
@@ -56,6 +65,7 @@ class _ProfileState extends State<Profile> {
               _userName = userData['name'];
               _userEmail = userData['email'];
               _userMobile = userData['mobile'];
+              _docId = userData["userId"];
             });
           }
         } else {

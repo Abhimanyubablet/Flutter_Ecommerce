@@ -1,3 +1,4 @@
+
 import 'package:firebase_auth/firebase_auth.dart'; // Import FirebaseAuth
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -9,6 +10,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import '../../widgets/rounded_btn.dart';
 
 class PhoneRegister extends StatefulWidget {
+
   const PhoneRegister({Key? key}) : super(key: key);
 
   @override
@@ -16,6 +18,7 @@ class PhoneRegister extends StatefulWidget {
 }
 
 class _PhoneRegisterState extends State<PhoneRegister> {
+  final auth = FirebaseAuth.instance.currentUser;
   final CollectionReference _items =
   FirebaseFirestore.instance.collection('UserProfileData');
 
@@ -23,6 +26,11 @@ class _PhoneRegisterState extends State<PhoneRegister> {
   final phoneEmailController = TextEditingController();
   final phoneMobileController = TextEditingController();
 
+  @override
+  void initState() {
+    phoneMobileController.text = auth!.phoneNumber!;
+    super.initState();
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -66,6 +74,7 @@ class _PhoneRegisterState extends State<PhoneRegister> {
               Container(
                 child: TextFormField(
                   controller: phoneMobileController,
+                  enabled: false,
                   decoration: InputDecoration(
                     labelText: "Your Conctact",
                     prefixIcon: Icon(Icons.email),
@@ -105,7 +114,7 @@ class _PhoneRegisterState extends State<PhoneRegister> {
                         "name": phoneName,
                         "email": phoneEmail,
                         "mobile": phoneMobile,
-                        "userDocId":userId
+                        "userId":userId
                       });
 
                       // Store the UID in shared preferences
@@ -128,6 +137,7 @@ class _PhoneRegisterState extends State<PhoneRegister> {
                         backgroundColor: Colors.blueGrey,
                         timeInSecForIosWeb: 5,
                       );
+                      prefs.setBool('isPhone', true);
 
                       // Navigate to the dashboard
                       Navigator.push(

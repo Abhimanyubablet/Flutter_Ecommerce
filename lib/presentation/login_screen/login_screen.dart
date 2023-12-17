@@ -124,6 +124,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             // Store the user document ID in shared preferences
                             SharedPreferences prefs = await SharedPreferences.getInstance();
                             prefs.setString('userDocId', value.user?.uid ?? '');
+                            prefs.setBool('isPhone', false);
 
                             // Navigate to the 'dashboard' route
                             Navigator.push(context, MaterialPageRoute(builder: (context)=>DashBoard()));
@@ -131,7 +132,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             // If there's an error during sign-in
                             print("Error: ${error.toString()}");
                             Fluttertoast.showToast(
-                                msg: "Invalid email and password",
+                                msg: "${error.toString()}",
                                 backgroundColor: Colors.blueGrey,
                                 timeInSecForIosWeb: 5);
                           });
@@ -299,6 +300,9 @@ class _LoginScreenState extends State<LoginScreen> {
         );
 
         await FirebaseAuth.instance.signInWithCredential(credential);
+        SharedPreferences prefs =
+        await SharedPreferences.getInstance();
+        prefs.setBool('isPhone', false);
 
         Fluttertoast.showToast(
           msg: "Google Login successful",

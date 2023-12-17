@@ -96,7 +96,8 @@ import 'package:shopping_practise_project/presentation/regester_page/regester.da
 
 class VerifyCode extends StatefulWidget {
   final String verificationId;
-  const VerifyCode({required this.verificationId, Key? key}) : super(key: key);
+  final String phone;
+  const VerifyCode({required this.verificationId, Key? key, required this.phone}) : super(key: key);
 
   @override
   State<VerifyCode> createState() => _VerifyCodeState();

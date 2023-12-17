@@ -55,7 +55,7 @@ class _LoginWithPhoneState extends State<LoginWithPhone> {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => VerifyCode(verificationId: verificationId),
+                          builder: (context) => VerifyCode(verificationId: verificationId, phone: phoneNumber),
                         ),
                       );
                     },
